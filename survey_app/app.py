@@ -1,4 +1,3 @@
-import os
 from datetime import datetime
 
 import firebase_admin
@@ -7,20 +6,15 @@ import plotly.express as px
 import streamlit as st
 from firebase_admin import credentials, firestore
 
-try:
-    from dotenv import load_dotenv
-
-    load_dotenv()
-except ImportError:
-    pass
-
-KEY_PATH = os.getenv("FIREBASE_KEY", "serviceAccount.json")
-
 if not firebase_admin._apps:
-    if not os.path.exists(KEY_PATH):
-        st.error(f"Ошибка: файл ключа '{KEY_PATH}' не найден.")
+    if "firebase" not in st.secrets:
+        st.error(
+            "Не настроены секреты Firebase. Добавьте секцию [firebase] с содержимым "
+            "service account JSON в .streamlit/secrets.toml (локально) или в "
+            "Settings → Secrets (на Streamlit Cloud)."
+        )
         st.stop()
-    cred = credentials.Certificate(KEY_PATH)
+    cred = credentials.Certificate(dict(st.secrets["firebase"]))
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()

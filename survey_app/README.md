@@ -15,15 +15,11 @@ pip install -r requirements.txt
 
 ## Настройка Firebase
 
-1. В консоли Firebase создайте проект и сервис-аккаунт (Project Settings → Service accounts → Generate new private key).
-2. Сохраните скачанный JSON-файл в эту папку, например как `serviceAccount.json`.
-3. Укажите путь к файлу в `.env`:
+Ключ доступа к Firebase хранится через [`st.secrets`](https://docs.streamlit.io/develop/concepts/connections/secrets-management), а не в файле в репозитории — это безопасно для продакшена (Streamlit Cloud, контейнеры и т.д.).
 
-   ```
-   FIREBASE_KEY=serviceAccount.json
-   ```
-
-   Файл ключа и `.env` уже добавлены в `.gitignore` — не коммитьте их.
+1. В консоли Firebase создайте проект и сервис-аккаунт (Project Settings → Service accounts → Generate new private key) — скачается JSON-файл.
+2. **Локально**: скопируйте `.streamlit/secrets.toml.example` в `.streamlit/secrets.toml` и заполните секцию `[firebase]` значениями из скачанного JSON. Файл `secrets.toml` уже в `.gitignore` — не коммитьте его.
+3. **На Streamlit Cloud (продакшен)**: откройте App settings → Secrets и вставьте туда то же содержимое секции `[firebase]`.
 
 ## Запуск
 

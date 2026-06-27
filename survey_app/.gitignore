@@ -1,4 +1,5 @@
 serviceAccount.json
 serviceAccountKey.json
+.streamlit/secrets.toml
 __pycache__/
 *.pyc
